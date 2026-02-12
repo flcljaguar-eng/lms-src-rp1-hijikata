@@ -1,6 +1,8 @@
 package jp.co.sss.lms.controller;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +49,12 @@ public class AttendanceController {
 				.getAttendanceManagement(loginUserDto.getCourseId(), loginUserDto.getLmsUserId());
 		model.addAttribute("attendanceManagementDtoList", attendanceManagementDtoList);
 
+		// 現在時刻の取得
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月d日");
+		LocalDateTime today = LocalDateTime.now();
+		
+		
+		
 		return "attendance/detail";
 	}
 

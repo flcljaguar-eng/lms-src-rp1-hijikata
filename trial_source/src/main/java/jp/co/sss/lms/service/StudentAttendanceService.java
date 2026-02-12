@@ -335,8 +335,13 @@ public class StudentAttendanceService {
 		return messageUtil.getMessage(Constants.PROP_KEY_ATTENDANCE_UPDATE_NOTICE);
 	}
 	
-	
-	public Boolean notEnterCheck() {
+	/**
+	 * 勤怠（受講生入力）未入力取得
+	 * 
+	 * @return ダイアログ表示のフラグ
+	 * @throws ParseException
+	 */
+	public Boolean notEnterCheck()throws ParseException {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		
 		Date now = new Date();

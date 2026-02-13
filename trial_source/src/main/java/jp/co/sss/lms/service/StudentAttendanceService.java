@@ -351,7 +351,7 @@ public class StudentAttendanceService {
 		Integer notEnterDay = tStudentAttendanceMapper.notEnterCount(loginUserDto.getLmsUserId(), 0, today);
 		
 		// 未入力日がある場合フラグを立てる
-		if(notEnterDay > 0) {
+		if(notEnterDay > 1) {
 			return true;
 		}
 		

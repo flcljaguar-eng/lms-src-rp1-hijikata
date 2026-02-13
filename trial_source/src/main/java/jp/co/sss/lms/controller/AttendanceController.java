@@ -48,9 +48,8 @@ public class AttendanceController {
 		model.addAttribute("attendanceManagementDtoList", attendanceManagementDtoList);
 
 		// 勤怠未入力の判定
-		boolean a = studentAttendanceService.notEnterCheck();
-		
-		
+		boolean notEnterFlg = studentAttendanceService.notEnterCheck();
+		model.addAttribute("notEnterFlg", notEnterFlg);
 		
 		return "attendance/detail";
 	}

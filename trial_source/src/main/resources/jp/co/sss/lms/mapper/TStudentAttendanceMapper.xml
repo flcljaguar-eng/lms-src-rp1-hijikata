@@ -92,9 +92,9 @@
 		WHERE 
 			lms_user_id = #{lmsUserId}
 		AND
-			delete_flg_ = #{daleteFlg}
+			delete_flg = #{deleteFlg}
 		AND
-			training_date &lt; #{trainingDate}
+			training_date &lt; #{today}::timestamp
 		AND
 			status != 1
 		AND

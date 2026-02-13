@@ -342,13 +342,15 @@ public class StudentAttendanceService {
 	 * @throws ParseException
 	 */
 	public Boolean notEnterCheck()throws ParseException {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		
+		// 現在時刻を取得
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date now = new Date();
 		String today = sdf.format(now);
 		
+		// 勤怠未入力日数を取得
 		Integer notEnterDay = tStudentAttendanceMapper.notEnterCount(loginUserDto.getLmsUserId(), 0, today);
 		
+		// 未入力日がある場合フラグを立てる
 		if(notEnterDay > 0) {
 			return true;
 		}

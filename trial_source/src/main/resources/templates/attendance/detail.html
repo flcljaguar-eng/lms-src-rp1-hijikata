@@ -74,9 +74,10 @@
 	</div>
 
 	<script type="text/javascript" th:inline="javascript">
+		const notEnterFlg = /*[[${notEnterFlg}]]*/false;
 		window.onload = function(){
 			if(notEnterFlg){
-				aleat("過去日の勤怠に未入力があります。")
+				alert("過去日の勤怠に未入力があります。")
 			}
 		};
 		

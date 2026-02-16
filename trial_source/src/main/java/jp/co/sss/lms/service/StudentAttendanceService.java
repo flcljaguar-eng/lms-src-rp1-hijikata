@@ -215,7 +215,19 @@ public class StudentAttendanceService {
 	 */
 	public AttendanceForm setAttendanceForm(
 			List<AttendanceManagementDto> attendanceManagementDtoList) {
-
+		
+		Map<Integer, String> hourMap = new LinkedHashMap();
+		hourMap.put(null, ""); 
+		for(int i = 0; i < 12; i++) {
+			hourMap.put(i, String.format("%02d", i));
+		}
+		
+		Map<Integer, String> minuteMap = new LinkedHashMap();
+		minuteMap.put(null, ""); 
+		for(int i = 0; i < 60; i++) {
+			minuteMap.put(i, String.format("%02d", i));
+		}
+		
 		AttendanceForm attendanceForm = new AttendanceForm();
 		attendanceForm.setAttendanceList(new ArrayList<DailyAttendanceForm>());
 		attendanceForm.setLmsUserId(loginUserDto.getLmsUserId());
@@ -257,17 +269,7 @@ public class StudentAttendanceService {
 			attendanceForm.getAttendanceList().add(dailyAttendanceForm);
 		}
 		
-		Map<Integer, String> hourMap = new LinkedHashMap();
-		hourMap.put(null, ""); 
-		for(int i = 0; i < 12; i++) {
-			hourMap.put(i, String.format("%02d", i));
-		}
-		
-		Map<Integer, String> minMap = new LinkedHashMap();
-		minMap.put(null, ""); 
-		for(int i = 0; i < 12; i++) {
-			minMap.put(i, String.format("%02d", i));
-		}
+	
 		
 
 		return attendanceForm;

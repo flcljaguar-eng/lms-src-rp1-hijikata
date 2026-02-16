@@ -4,7 +4,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -254,6 +256,19 @@ public class StudentAttendanceService {
 
 			attendanceForm.getAttendanceList().add(dailyAttendanceForm);
 		}
+		
+		Map<Integer, String> hourMap = new LinkedHashMap();
+		hourMap.put(null, ""); 
+		for(int i = 0; i < 12; i++) {
+			hourMap.put(i, String.format("%02d", i));
+		}
+		
+		Map<Integer, String> minMap = new LinkedHashMap();
+		minMap.put(null, ""); 
+		for(int i = 0; i < 12; i++) {
+			minMap.put(i, String.format("%02d", i));
+		}
+		
 
 		return attendanceForm;
 	}

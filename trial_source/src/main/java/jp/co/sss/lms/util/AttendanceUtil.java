@@ -15,6 +15,12 @@ import jp.co.sss.lms.mapper.MSectionMapper;
  * 
  * @author 東京ITスクール
  */
+/**
+ * 
+ */
+/**
+ * 
+ */
 @Component
 public class AttendanceUtil {
 
@@ -149,18 +155,52 @@ public class AttendanceUtil {
 	
 	/**
 	 * 時間のプルダウンマップを生成
+	 *
+	 * @return 時間のプルダウンマップ
 	 */
-	
+	public LinkedHashMap<Integer, String> getHourMap() {
+		LinkedHashMap<Integer, String> hourMap = new LinkedHashMap();
+		hourMap.put(null, "");
+		for (int i = 0; i < 24; i++) {
+			hourMap.put(i, String.format("%02d", i));
+		}
+		
+		return hourMap;
+	}
 	/**
 	 * 分のプルダウンマップを生成
+	 * 
+	 * @return 分のプルダウンマップ
 	 */
+	public LinkedHashMap<Integer, String> getMinuteMap(){
+		LinkedHashMap<Integer, String> minuteMap = new LinkedHashMap();
+		minuteMap.put(null, ""); 
+		for(int i = 0; i < 60; i++) {
+			minuteMap.put(i, String.format("%02d", i));
+		}
+		return minuteMap;
+	}
 	
+
 	/**
-	 * 時間(時)の切り出し
+	 * 時間の(時)の切り出し
+	 * 
+	 * @param timeString
+	 * @return 時間(時)
 	 */
+	public Integer getHour(String timeString) {
+		Integer hour = Integer.parseInt(timeString.substring(0, 2));
+		return hour;
+	}
 	
 	/**
 	 * 時間(分)の切り出し
+	 * 
+	 * @param timeString
+	 * @return 時間(分)
 	 */
-
+	public Integer getMinute(String timeString) {
+		Integer minute = Integer.parseInt(timeString.substring(3, 5));
+		return minute;
+	}
 }

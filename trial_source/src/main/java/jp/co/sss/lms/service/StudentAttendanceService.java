@@ -4,9 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -216,18 +214,6 @@ public class StudentAttendanceService {
 	public AttendanceForm setAttendanceForm(
 			List<AttendanceManagementDto> attendanceManagementDtoList) {
 		
-		Map<Integer, String> hourMap = new LinkedHashMap();
-		hourMap.put(null, ""); 
-		for(int i = 0; i < 12; i++) {
-			hourMap.put(i, String.format("%02d", i));
-		}
-		
-		Map<Integer, String> minuteMap = new LinkedHashMap();
-		minuteMap.put(null, ""); 
-		for(int i = 0; i < 60; i++) {
-			minuteMap.put(i, String.format("%02d", i));
-		}
-		
 		AttendanceForm attendanceForm = new AttendanceForm();
 		attendanceForm.setAttendanceList(new ArrayList<DailyAttendanceForm>());
 		attendanceForm.setLmsUserId(loginUserDto.getLmsUserId());
@@ -250,8 +236,18 @@ public class StudentAttendanceService {
 					.setStudentAttendanceId(attendanceManagementDto.getStudentAttendanceId());
 			dailyAttendanceForm
 					.setTrainingDate(dateUtil.toString(attendanceManagementDto.getTrainingDate()));
+			
+			String timeString = attendanceManagementDto.getTrainingStartTime();
 			dailyAttendanceForm
-					.setTrainingStartTime(attendanceManagementDto.getTrainingStartTime());
+					.setTrainingStartTime(timeString);
+			
+			if (!timeString.isEmpty()) {
+				Integer startHour = attendanceUtil.getHour(timeString);
+				dailyAttendanceForm.setTrainingStartTimeHour(attendanceUtil.getHourMap());
+				Integer startMinute = attendanceUtil.getMinute(timeString);
+				dailyAttendanceForm.setTrainingStartTimeMinute(attendanceUtil.getMinuteMap());
+			}
+			
 			dailyAttendanceForm.setTrainingEndTime(attendanceManagementDto.getTrainingEndTime());
 			if (attendanceManagementDto.getBlankTime() != null) {
 				dailyAttendanceForm.setBlankTime(attendanceManagementDto.getBlankTime());
@@ -267,9 +263,11 @@ public class StudentAttendanceService {
 			dailyAttendanceForm.setStatusDispName(attendanceManagementDto.getStatusDispName());
 
 			attendanceForm.getAttendanceList().add(dailyAttendanceForm);
+			
+			
 		}
 		
-	
+		
 		
 
 		return attendanceForm;

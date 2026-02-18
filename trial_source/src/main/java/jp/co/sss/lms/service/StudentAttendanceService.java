@@ -355,13 +355,14 @@ public class StudentAttendanceService {
 
 	/**
 	 * 勤怠（受講生入力）未入力取得
-	 * 
+	 *
+	 * @author k-hijikata task25
 	 * @return ダイアログ表示のフラグ
 	 * @throws ParseException
 	 */
 	public Boolean notEnterCheck() throws ParseException {
 		// 現在時刻を取得
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date now = new Date();
 		String today = sdf.format(now);
 

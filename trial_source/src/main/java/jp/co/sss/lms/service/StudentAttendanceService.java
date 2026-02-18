@@ -240,6 +240,7 @@ public class StudentAttendanceService {
 			dailyAttendanceForm
 					.setTrainingDate(dateUtil.toString(attendanceManagementDto.getTrainingDate()));
 
+			// 出勤時間を設定 土方 task26 
 			String timeString = attendanceManagementDto.getTrainingStartTime();
 			if (!timeString.isEmpty()) {
 				dailyAttendanceForm
@@ -248,6 +249,7 @@ public class StudentAttendanceService {
 						.setTrainingStartTimeMinute(attendanceUtil.getMinute(timeString));
 			}
 
+			// 退勤時間を設定 土方 task26
 			String endTimeString = attendanceManagementDto.getTrainingEndTime();
 			dailyAttendanceForm.setTrainingEndTime(endTimeString);
 			if(!endTimeString.isEmpty()) {

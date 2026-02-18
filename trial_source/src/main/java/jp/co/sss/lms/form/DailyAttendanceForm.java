@@ -47,13 +47,25 @@ public class DailyAttendanceForm {
 	/** インデックス */
 	private String index;
 	
-	/** 出勤時間(時) */
+	/**
+	 * 出勤時間(時) 
+	 * @author k-hijikata task26
+	 */
 	private Integer trainingStartTimeHour;
-	/** 出勤時間(分) */
+	/** 
+	 * 出勤時間(分) 
+	 * @author k-hijikata task26
+	 */
 	private Integer trainingStartTimeMinute;
-	/** 退勤時間(時) */
+	/** 
+	 * 退勤時間(時)
+	 * @author k-hijikata task26
+	 */
 	private Integer trainingEndTimeHour;
-	/** 退勤時間(分) */
+	/** 
+	 * 退勤時間(分)
+	 * @author k-hijikata task26
+	 */
 	private Integer trainingEndTimeMinute;
 	
 }

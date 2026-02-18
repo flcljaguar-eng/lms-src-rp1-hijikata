@@ -86,7 +86,7 @@
 		WHERE student_attendance_id = #{studentAttendanceId}
 	</update>
 
-	<select id="notEnterCount" resultType="jp.co.sss.lms.entity.TStudentAttendance">
+	<select id="notEnterCount" parameterType="jp.co.sss.lms.entity.TStudentAttendance">
 		SELECT COUNT(*) 
 		FROM t_student_attendance
 		WHERE 
@@ -94,7 +94,7 @@
 		AND
 			delete_flg = #{deleteFlg}
 		AND
-			training_date &lt; #{today}::timestamp
+			training_date &lt; #{trainingDate}
 		AND
 			status != 1
 		AND

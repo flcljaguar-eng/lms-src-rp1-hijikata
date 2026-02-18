@@ -365,12 +365,13 @@ public class StudentAttendanceService {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date now = new Date();
 		String today = sdf.format(now);
+		now = sdf.parse(today);
 
 		// 勤怠未入力日数を取得
-		Integer notEnterDay = tStudentAttendanceMapper.notEnterCount(loginUserDto.getLmsUserId(), 0, today);
+		Integer notEnterDay = tStudentAttendanceMapper.notEnterCount(loginUserDto.getLmsUserId(), Constants.DB_FLG_FALSE, now);
 
 		// 未入力日がある場合フラグを立てる
-		if (notEnterDay > 1) {
+		if (notEnterDay > 0) {
 			return true;
 		}
 

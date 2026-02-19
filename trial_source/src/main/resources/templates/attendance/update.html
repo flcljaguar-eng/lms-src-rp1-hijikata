@@ -49,12 +49,12 @@
 								<td class="w140">[[${dailyAttendanceForm.dispTrainingDate}]]</td>
 								<td class="w140">[[${dailyAttendanceForm.sectionName}]]</td>
 								<td class="w60">
-									<input type="button" class="btn btn-success" value="定時">
+									<input type="button" class="btn btn-success" value="定時" onclick="regularTime()">
 								</td>
 								<td class="w70">
-									<select th:name="|attendanceList[${stat.index}].trainingStartTimeHour|"class="form-control">
+									<select th:name="|attendanceList[${stat.index}].trainingStartTimeHour|" th:id="|startHour[${stat.index}]|" class="form-control">
 										<option th:each="trainingStartTimeHour : ${attendanceForm.trainingTimeHour}" th:value="${trainingStartTimeHour.value}" th:inline="text"
-										th:selected="${trainingStartTimeHour.key == dailyAttendanceForm.trainingStartTimeHour}">[[${trainingStartTimeHour.value}]]</option> 
+										th:selected="${trainingStartTimeHour.key == dailyAttendanceForm.trainingStartTimeHour}" >[[${trainingStartTimeHour.value}]]</option> 
 								</td>
 								<td>:</td>
 								<td>
@@ -102,5 +102,10 @@
 		</div>
 	</div>
 
+	<script type="text/javascript">
+		function regularTime(){
+			document.getElementById("startHour" + index).selectedIndex = 9;
+		}
+	</script>
 </body>
 </html>

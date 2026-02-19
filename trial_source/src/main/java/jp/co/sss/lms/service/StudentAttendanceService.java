@@ -30,6 +30,12 @@ import jp.co.sss.lms.util.TrainingTime;
  * 
  * @author 東京ITスクール
  */
+/**
+ * 
+ */
+/**
+ * 
+ */
 @Service
 public class StudentAttendanceService {
 
@@ -380,21 +386,28 @@ public class StudentAttendanceService {
 		return false;
 	}
 
+	/**
+	 * 出退勤時間の入力値を「hh:mm」形式に変換
+	 * 
+	 * @author k-hijikata task26
+	 * @param attendanceForm
+	 * @param result
+	 */
 	public void formatConversion(AttendanceForm attendanceForm, BindingResult result) {
 		List<DailyAttendanceForm> dailyAttendanceFormList = attendanceForm.getAttendanceList();
 		for (DailyAttendanceForm dailyAttendanceForm : dailyAttendanceFormList) {
 			Integer startHour = dailyAttendanceForm.getTrainingStartTimeHour();
 			Integer startMinute = dailyAttendanceForm.getTrainingStartTimeMinute();
-			if(startHour != null &&startMinute != null) {
-				dailyAttendanceForm.setTrainingStartTime
-						(String.format("%02d", startHour) + ":" + String.format("%02d", startMinute));
+			if (startHour != null && startMinute != null) {
+				dailyAttendanceForm.setTrainingStartTime(
+						String.format("%02d", startHour) + ":" + String.format("%02d", startMinute));
 			}
-			
+
 			Integer endHour = dailyAttendanceForm.getTrainingEndTimeHour();
 			Integer endMinute = dailyAttendanceForm.getTrainingEndTimeMinute();
-			if(endHour != null && endMinute != null) {
-				dailyAttendanceForm.setTrainingEndTime
-						(String.format("%02d", endHour) + ":" + String.format("%02d", endMinute));
+			if (endHour != null && endMinute != null) {
+				dailyAttendanceForm
+						.setTrainingEndTime(String.format("%02d", endHour) + ":" + String.format("%02d", endMinute));
 			}
 		}
 	}

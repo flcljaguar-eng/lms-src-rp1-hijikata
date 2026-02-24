@@ -112,5 +112,15 @@
 			document.getElementById("endMin" + regTime).selectedIndex = 1;
 		}
 	</script>
+	<script type="text/javascript" th:inline="javascript">
+		function confirmation(){
+			alert("更新します。よろしいですか？")
+		};
+		
+		const update = document.getElementById("btn-info");
+		update.addEventListener("click",confirmation);
+		
+	</script>
+	
 </body>
 </html>

@@ -96,7 +96,7 @@
 					<th:block th:if="${session.loginUserDto.role != '0001'}">
 						<input type="submit" value="戻る" name="indexCompany" class="btn btn-default" />
 					</th:block>
-					<input type="submit" value="更新" name="complete" class="btn btn-info" />
+					<input type="submit" value="更新" name="complete" class="btn btn-info" onclick="confirmation()"/>
 				</div>
 
 			</form>
@@ -116,9 +116,6 @@
 		function confirmation(){
 			alert("更新します。よろしいですか？")
 		};
-		
-		const update = document.getElementById("btn-info");
-		update.addEventListener("click",confirmation);
 		
 	</script>
 	

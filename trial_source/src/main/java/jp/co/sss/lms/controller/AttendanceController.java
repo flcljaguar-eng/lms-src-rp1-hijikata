@@ -137,6 +137,13 @@ public class AttendanceController {
 	public String complete(AttendanceForm attendanceForm, Model model, BindingResult result)
 			throws ParseException {
 
+		// 入力チェックでエラーの場合勤怠情報直接変更画面へ遷移
+		studentAttendanceService.updateInputCheck(attendanceForm, result);
+
+		if(result.hasErrors()) {
+			return "attendance/update";
+		}
+		
 		// 出退勤時間の設定
 		studentAttendanceService.formatConversion(attendanceForm, result);
 		

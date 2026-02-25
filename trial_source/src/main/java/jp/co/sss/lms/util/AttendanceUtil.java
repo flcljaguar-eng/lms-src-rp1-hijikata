@@ -207,4 +207,23 @@ public class AttendanceUtil {
 		Integer minute = Integer.parseInt(timeString.substring(3, 5));
 		return minute;
 	}
+	
+	/**
+	 * 受講時間の計算
+	 * 
+	 * @author k-hijikata task27
+	 * @param trainingStartTime
+	 * @param trainingEndTime
+	 * @return
+	 */
+	public TrainingTime calcJukoTime(TrainingTime trainingStartTime, TrainingTime trainingEndTime) {
+		int startTime = (trainingStartTime.getHour() * 60) + trainingStartTime.getMinute();
+		int endTime = (trainingEndTime.getHour() * 60) + trainingEndTime.getMinute();
+		int trainingMinute = endTime - startTime;
+		Integer hour = trainingMinute / 60;
+		Integer minute = trainingMinute % 60;
+		TrainingTime jukoTime = new TrainingTime(hour, minute);
+		
+		return jukoTime;
+	}
 }

@@ -141,7 +141,7 @@ public class AttendanceController {
 		studentAttendanceService.updateInputCheck(attendanceForm, result);
 
 		if(result.hasErrors()) {
-			return "attendance/update";
+			return "redirect:/attendance/update";
 		}
 		
 		// 出退勤時間の設定

@@ -422,8 +422,10 @@ public class StudentAttendanceService {
 	 */
 	public void updateInputCheck(AttendanceForm attendanceForm, BindingResult result) {
 			
+		int i = 0;
 		// DailyAttendanceFormごとにチェックを実施
 		for(DailyAttendanceForm dailyAttendanceForm: attendanceForm.getAttendanceList()) {
+			i++;
 			// 備考の文字数チェック（100
 			if(dailyAttendanceForm.getNote().length() > 100) {
 				String length = messageUtil.getMessage("maxlength");
@@ -436,36 +438,38 @@ public class StudentAttendanceService {
 			Integer endHour = dailyAttendanceForm.getTrainingEndTimeHour();
 			Integer endMinute = dailyAttendanceForm.getTrainingEndTimeMinute();
 			// 時刻の片側未入力チェック
-			if(startHour.equals(null) || !startMinute.equals(null)){
+			if(startHour == null && startMinute != null){
 				String trainingStart = messageUtil.getMessage("trainingStartTime");
 				result.addError(new FieldError(result.getObjectName(), "trainingStartTime",
 						messageUtil.getMessage("input.invalid", new String[]{trainingStart})));
 				
-			} else if(!startHour.equals(null) || startMinute.equals(null)){
+			} else if(startHour != null && startMinute == null){
 				String trainingStart = messageUtil.getMessage("trainingStartTime");
 				result.addError(new FieldError(result.getObjectName(), "trainingStartTime",
 						messageUtil.getMessage("input.invalid", new String[]{trainingStart})));
 				
-			} else if(endHour.equals(null) || !endMinute.equals(null)) {
+			} else if(endHour == null && endMinute !=null) {
 				String trainingEnd = messageUtil.getMessage("trainingEndTime");
 				result.addError(new FieldError(result.getObjectName(), "trainingEndTime",
 						messageUtil.getMessage("input.invalid", new String[]{trainingEnd})));
 				
-			} else if(!endHour.equals(null) || endMinute.equals(null)) {
+			} else if(endHour != null && endMinute ==null) {
 				String trainingEnd = messageUtil.getMessage("trainingEndTime");
 				result.addError(new FieldError(result.getObjectName(), "trainingEndTime",
 						messageUtil.getMessage("input.invalid", new String[]{trainingEnd})));
 			}
 			
 			// 出勤なし退勤ありの矛盾チェック
-			if(startHour.equals(null) || !endHour.equals(null)) {
-				
+			if(startHour == null && endHour != null) {
+				result.addError(new FieldError(result.getObjectName(), "punchIn",
+						messageUtil.getMessage("attendance.punchInEmpty", new String[]{"i"})));
 			}
 			
 			// [ifエラーなし]出勤時刻>退勤時刻でないか比較
-			if(!startHour.equals(null) && !endHour.equals(null)) {
+			if(startHour != null && endHour != null) {
 				if (startHour > endHour) {
-					
+					result.addError(new FieldError(result.getObjectName(), "timeRange",
+							messageUtil.getMessage("attendance.trainingTimeRange")));
 				}
 			}
 			
@@ -476,7 +480,8 @@ public class StudentAttendanceService {
 				TrainingTime endTime = new TrainingTime(dailyAttendanceForm.getTrainingEndTime());
 				TrainingTime trainingTime = attendanceUtil.calcJukoTime(startTime, endTime);
 				if(trainingTime.compareTo(blankTime) <= 0) {
-					
+					result.addError(new FieldError(result.getObjectName(), "blankTime",
+							messageUtil.getMessage("attendance.blankTimeError")));
 				}
 			}
 		}

@@ -9,7 +9,7 @@
 
 	<th:block th:if="${session.loginUserDto.role == '0001'}">
 		<h2>勤怠管理</h2>
-		<span th:if="${result}">[[${result}]]</span>
+		<span th:if="${result}">・[[${result.fieldError.defaultMessage}]]</span>
 		
 	</th:block>
 

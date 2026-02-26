@@ -474,13 +474,25 @@ public class StudentAttendanceService {
 			
 			// [if中抜け時間が入力されている]出退勤の差分から計算される最大受講時間よりも中抜け時間が長くない
 			if(dailyAttendanceForm.getBlankTime() != null) {
-				TrainingTime blankTime = attendanceUtil.calcBlankTime(dailyAttendanceForm.getBlankTime());
-				TrainingTime startTime = new TrainingTime(dailyAttendanceForm.getTrainingStartTime());
-				TrainingTime endTime = new TrainingTime(dailyAttendanceForm.getTrainingEndTime());
-				TrainingTime trainingTime = attendanceUtil.calcJukoTime(startTime, endTime);
-				if(startTime != null && endTime != null && trainingTime.compareTo(blankTime) >= 0) {
+				
+				if(dailyAttendanceForm.getTrainingStartTimeHour() == null || dailyAttendanceForm.getTrainingStartTimeMinute() == null) {
 					result.addError(new FieldError(result.getObjectName(), "blankTime",
 							messageUtil.getMessage("attendance.blankTimeError")));
+					
+				}else if(dailyAttendanceForm.getTrainingEndTimeHour() == null || dailyAttendanceForm.getTrainingEndTimeMinute() == null){
+					result.addError(new FieldError(result.getObjectName(), "blankTime",
+							messageUtil.getMessage("attendance.blankTimeError")));
+					
+				}else {
+					TrainingTime blankTime = attendanceUtil.calcBlankTime(dailyAttendanceForm.getBlankTime());
+					TrainingTime startTime = new TrainingTime(dailyAttendanceForm.getTrainingStartTime());
+					TrainingTime endTime = new TrainingTime(dailyAttendanceForm.getTrainingEndTime());
+					TrainingTime trainingTime = attendanceUtil.calcJukoTime(startTime, endTime);
+				
+					if(trainingTime.compareTo(blankTime) >= 0) {
+						result.addError(new FieldError(result.getObjectName(), "blankTime",
+								messageUtil.getMessage("attendance.blankTimeError")));
+					}
 				}
 			}
 		}

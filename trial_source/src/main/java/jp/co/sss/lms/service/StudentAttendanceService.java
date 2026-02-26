@@ -428,10 +428,9 @@ public class StudentAttendanceService {
 			i++;
 			// 備考の文字数チェック（100
 			if(dailyAttendanceForm.getNote().length() > 100) {
-				String length = messageUtil.getMessage("maxlength");
-				String bikou = messageUtil.getMessage("placeNote");
-				result.addError(new FieldError(result.getObjectName(), "maxlength",
-						messageUtil.getMessage("match", new String[] { length, bikou })));
+				String bikou = messageUtil.getMessage("note");
+				result.addError(new FieldError(result.getObjectName(), "note",
+						messageUtil.getMessage("maxlength", new String[] {bikou , "100"})));
 			}
 			Integer startHour = dailyAttendanceForm.getTrainingStartTimeHour();
 			Integer startMinute = dailyAttendanceForm.getTrainingStartTimeMinute();
@@ -439,37 +438,37 @@ public class StudentAttendanceService {
 			Integer endMinute = dailyAttendanceForm.getTrainingEndTimeMinute();
 			// 時刻の片側未入力チェック
 			if(startHour == null && startMinute != null){
-				String trainingStart = messageUtil.getMessage("trainingStartTime");
-				result.addError(new FieldError(result.getObjectName(), "trainingStartTime",
-						messageUtil.getMessage("input.invalid", new String[]{trainingStart})));
+				String trainingStart = messageUtil.getMessage("trainingStartTime", new String[] {"(時)"});
+				result.addError(new FieldError(result.getObjectName(), "trainingStartTimeHour",
+						messageUtil.getMessage("input.invalid", new String[]{trainingStart, "時"})));
 				
 			} else if(startHour != null && startMinute == null){
-				String trainingStart = messageUtil.getMessage("trainingStartTime");
-				result.addError(new FieldError(result.getObjectName(), "trainingStartTime",
+				String trainingStart = messageUtil.getMessage("trainingStartTime", new String[] {"(分)"});
+				result.addError(new FieldError(result.getObjectName(), "trainingStartTimeMinute",
 						messageUtil.getMessage("input.invalid", new String[]{trainingStart})));
 				
 			} else if(endHour == null && endMinute !=null) {
-				String trainingEnd = messageUtil.getMessage("trainingEndTime");
-				result.addError(new FieldError(result.getObjectName(), "trainingEndTime",
+				String trainingEnd = messageUtil.getMessage("trainingEndTime", new String[] {"(時)"});
+				result.addError(new FieldError(result.getObjectName(), "trainingEndTimeHour",
 						messageUtil.getMessage("input.invalid", new String[]{trainingEnd})));
 				
 			} else if(endHour != null && endMinute ==null) {
-				String trainingEnd = messageUtil.getMessage("trainingEndTime");
-				result.addError(new FieldError(result.getObjectName(), "trainingEndTime",
+				String trainingEnd = messageUtil.getMessage("trainingEndTime", new String[] {"(分)"});
+				result.addError(new FieldError(result.getObjectName(), "trainingEndTimeMinute",
 						messageUtil.getMessage("input.invalid", new String[]{trainingEnd})));
 			}
 			
 			// 出勤なし退勤ありの矛盾チェック
 			if(startHour == null && endHour != null) {
-				result.addError(new FieldError(result.getObjectName(), "punchIn",
-						messageUtil.getMessage("attendance.punchInEmpty", new String[]{"i"})));
+				result.addError(new FieldError(result.getObjectName(), "dailyAttendanceForm.trainingStartTimeHour",
+						messageUtil.getMessage("attendance.punchInEmpty")));
 			}
 			
 			// [ifエラーなし]出勤時刻>退勤時刻でないか比較
 			if(startHour != null && endHour != null) {
 				if (startHour > endHour) {
-					result.addError(new FieldError(result.getObjectName(), "timeRange",
-							messageUtil.getMessage("attendance.trainingTimeRange")));
+					result.addError(new FieldError(result.getObjectName(), "trainingStartHour",
+							messageUtil.getMessage("attendance.trainingTimeRange", new String[]{dailyAttendanceForm.getDispTrainingDate()})));
 				}
 			}
 			
@@ -479,7 +478,7 @@ public class StudentAttendanceService {
 				TrainingTime startTime = new TrainingTime(dailyAttendanceForm.getTrainingStartTime());
 				TrainingTime endTime = new TrainingTime(dailyAttendanceForm.getTrainingEndTime());
 				TrainingTime trainingTime = attendanceUtil.calcJukoTime(startTime, endTime);
-				if(trainingTime.compareTo(blankTime) <= 0) {
+				if(startTime != null && endTime != null && trainingTime.compareTo(blankTime) >= 0) {
 					result.addError(new FieldError(result.getObjectName(), "blankTime",
 							messageUtil.getMessage("attendance.blankTimeError")));
 				}

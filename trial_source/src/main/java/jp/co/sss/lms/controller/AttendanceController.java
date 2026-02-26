@@ -137,11 +137,22 @@ public class AttendanceController {
 	public String complete(AttendanceForm attendanceForm, Model model, BindingResult result)
 			throws ParseException {
 
-		// 入力チェックでエラーの場合勤怠情報直接変更画面へ遷移
+		// 入力チェックでエラーの場合勤怠情報直接変更画面へ遷移 task27 k-hijikata
 		studentAttendanceService.updateInputCheck(attendanceForm, result);
 
+		// 入力に不備があった場合終了 task27 k-hijikata
 		if(result.hasErrors()) {
-			return "redirect:/attendance/update";
+
+			// 勤怠管理リストの取得
+			List<AttendanceManagementDto> attendanceManagementDtoList = studentAttendanceService
+					.getAttendanceManagement(loginUserDto.getCourseId(), loginUserDto.getLmsUserId());
+			// 勤怠フォームの生成
+			attendanceForm = studentAttendanceService
+					.setAttendanceForm(attendanceManagementDtoList);
+			model.addAttribute("attendanceForm", attendanceForm);
+
+			model.addAttribute("result", result);
+			return "attendance/update";
 		}
 		
 		// 出退勤時間の設定
